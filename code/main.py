@@ -1,3 +1,7 @@
+import os
+os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"
+os.environ["CUDA_VISIBLE_DEVICES"]="2"
+
 import math
 import random
 from torch.nn import MultiLabelSoftMarginLoss
@@ -6,21 +10,19 @@ from Data import Image_Data
 import torch.optim as optim
 from models import *
 from transformers import AutoModel, AutoTokenizer, BertTokenizer
+
 import torch
 import time
 import pickle
 
-import os
-os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"
 
-os.environ["CUDA_VISIBLE_DEVICES"]="2"
 BATCH_SIZE = 64
 if __name__=='__main__':
 
     img_d = Image_Data(BATCH_SIZE)
     device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
     
-    model = GCLIP()
+    model = CLIP()
     if torch.cuda.is_available():
         model.cuda()
 

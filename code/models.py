@@ -2,7 +2,6 @@ import torch
 import torch.nn as nn
 from layers import *
 import torch.nn.functional as F
-import pytorch_lightning as pl
 from torchvision import models
 
 from transformers import AutoModel, AutoTokenizer, BertTokenizer
@@ -69,7 +68,7 @@ class TextEncoder(nn.Module):
         projection_len = torch.norm(projected_vec, dim=-1, keepdim=True)
         return projected_vec / projection_len
 
-class GCLIP(nn.Module):
+class CLIP(nn.Module):
     def __init__(self, 
                  text_nhid: int = 768,
                  embed_dim: int = 512,
