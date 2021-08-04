@@ -73,19 +73,30 @@ class CLIP(nn.Module):
                  text_nhid: int = 768,
                  embed_dim: int = 512,
                  text_model = "distilbert-base-multilingual-cased",
-                 lr: float = 1e-3
+                 lr: float = 1e-3,
+                 temperature: float = 1.0,
         ) -> None:
         super().__init__()
         self.vision_encoder = VisionEncoder(d_out=embed_dim)
         self.text_encoder = TextEncoder(text_nhid, embed_dim, text_model)
         self.tokenizer = Tokenizer(AutoTokenizer.from_pretrained(text_model))
         self.lr = lr
+        self.temperature = temperature
 
     def forward(self, images, text_dev) -> torch.Tensor:
         image_embed = self.vision_encoder(images)
         text_embed = self.text_encoder(text_dev)
         similarity = text_embed @ image_embed.T
-
-        loss = clip_loss(similarity)
+        
+        loss = calculate_loss(image_embed, text_embed, self.temperature)
+        #loss = clip_loss(similarity)
         img_acc, text_acc = metrics(similarity)
         return loss, img_acc, text_acc
+    
+    def evaluate(self, images, text_dev):
+        image_embed = self.vision_encoder(images)
+        text_embed = self.text_encoder(text_dev)
+        similarity = text_embed @ image_embed.T
+        
+        val, closest = similarity.topk(5, dim=-1)
+        return val, closest

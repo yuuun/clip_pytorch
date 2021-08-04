@@ -60,7 +60,8 @@ if __name__=='__main__':
                 img = img.cuda()
                 text_dev = {k: v.to(device) for k, v in model.tokenizer(text).items()}
                 
-                _, img_acc, cap_acc = model(img, text_dev)
+                val, closest = model.evaluate(img, text_dev)
+                #_, img_acc, cap_acc = model(img, text_dev)
                 val_img_acc += img_acc
                 val_cap_acc += cap_acc
                 if i % 100 == 0:
