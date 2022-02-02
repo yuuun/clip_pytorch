@@ -1,6 +1,9 @@
-paper: [CVPR] Learning Transferable Visual Models From Natural Language Supervision
+## paper: [CVPR] Learning Transferable Visual Models From Natural Language Supervision
 https://arxiv.org/abs/2103.00020
 
-Code(pytorch-lightning version): https://colab.research.google.com/github/sachinruk/blog/blob/master/_notebooks/2021-03-07-CLIP.ipynb#scrollTo=ApLlT8hdTLVU
+## Code(pytorch-lightning version)
 
+https://colab.research.google.com/github/sachinruk/blog/blob/master/_notebooks/2021-03-07-CLIP.ipynb#scrollTo=ApLlT8hdTLVU
+
+### Explanation
 This implementation is the version of pytorch which was depicted from openai clip
